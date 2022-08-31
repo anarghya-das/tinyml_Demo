@@ -30,7 +30,8 @@ def main():
                             size=SIZE,
                             transform=transforms.Compose([ToTensor()]))
 
-    trainloader = DataLoader(trainset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
+    trainloader = DataLoader(
+        trainset, batch_size=BATCH_SIZE, shuffle=True, num_workers=0)
 
     testset = IEGM_DataSET(root_dir=path_data,
                            indice_dir=path_indices,
@@ -38,7 +39,8 @@ def main():
                            size=SIZE,
                            transform=transforms.Compose([ToTensor()]))
 
-    testloader = DataLoader(testset, batch_size=BATCH_SIZE_TEST, shuffle=True, num_workers=0)
+    testloader = DataLoader(
+        testset, batch_size=BATCH_SIZE_TEST, shuffle=True, num_workers=0)
 
     print("Training Dataset loading finish.")
 
@@ -52,7 +54,8 @@ def main():
     Test_acc = []
 
     print("Start training")
-    for epoch in range(epoch_num):  # loop over the dataset multiple times (specify the #epoch)
+    # loop over the dataset multiple times (specify the #epoch)
+    for epoch in range(epoch_num):
 
         running_loss = 0.0
         correct = 0.0
@@ -105,7 +108,8 @@ def main():
             running_loss_test += loss_test.item()
             i += 1
 
-        print('Test Acc: %.5f Test Loss: %.5f' % (correct / total, running_loss_test / i))
+        print('Test Acc: %.5f Test Loss: %.5f' %
+              (correct / total, running_loss_test / i))
 
         Test_loss.append(running_loss_test / i)
         Test_acc.append((correct / total).item())
@@ -133,13 +137,16 @@ def main():
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
     argparser.add_argument('--epoch', type=int, help='epoch number', default=2)
-    argparser.add_argument('--lr', type=float, help='learning rate', default=0.0001)
-    argparser.add_argument('--batchsz', type=int, help='total batchsz for traindb', default=32)
+    argparser.add_argument(
+        '--lr', type=float, help='learning rate', default=0.0001)
+    argparser.add_argument('--batchsz', type=int,
+                           help='total batchsz for traindb', default=32)
     argparser.add_argument('--cuda', type=int, default=0)
     argparser.add_argument('--size', type=int, default=1250)
-    argparser.add_argument('--path_data', type=str, default='H:/Date_Experiment/data_IEGMdb_ICCAD_Contest/segments-R250'
-                                                            '-BPF15_55-Noise/tinyml_contest_data_training/')
-    argparser.add_argument('--path_indices', type=str, default='./data_indices')
+    argparser.add_argument('--path_data', type=str,
+                           default='tinyml_contest_data_training/')
+    argparser.add_argument('--path_indices', type=str,
+                           default='./data_indices')
 
     args = argparser.parse_args()
 
